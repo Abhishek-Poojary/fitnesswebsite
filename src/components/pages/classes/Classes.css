@@ -1,0 +1,49 @@
+
+
+.custom-position-class {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 60vh;
+}
+
+.custom-position-class h1 {
+    color: white;
+    font-family: "Dosis";
+}
+
+.custom-position-class span {
+    color:  #f2f2f2;
+    font-family: "Dosis";
+}
+
+.custom-class-container{
+    background-color: white;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  
+}
+
+.custom-class-inner-container{
+    display: flex;
+    flex-direction: row;
+    margin: 30px;
+    column-gap: 30px;
+    flex-basis: 40%;
+}
+
+.custom-class-header{
+    font-family: "Teko";
+    font-size: 23px;
+    width: fit-content;
+
+}
+
+@media screen and (max-width: 576px) {
+    .custom-class-inner-container{
+        flex-basis: 100%;
+    }
+    
+}

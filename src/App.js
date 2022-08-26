@@ -1,32 +1,48 @@
-import { useEffect } from 'react';
-import {Routes,Route,BrowserRouter}  from 'react-router-dom'
+import { useEffect, useState } from 'react';
+import { Routes, Route, BrowserRouter } from 'react-router-dom'
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import NavigationHeader from './components/navigation/header/NavigationHeader';
 import Home from './components/home/Home';
 import WebFont from "webfontloader";
-import NavigationFooter from './components/navigation/footer/NavigationFooter';
 import Classes from './components/pages/classes/Classes';
+import NavigationHeader from './components/navigation/header/NavigationHeader';
+import NavigationFooter from './components/navigation/footer/NavigationFooter';
+
 
 function App() {
-
+  const [backGroundImagePath, setBackGroundImagePath] = useState("");
+  const changeBackground = (value) => {
+    setBackGroundImagePath(value);
+  }
 
   useEffect(() => {
     WebFont.load({
       google: {
-        families: ["Rubik","Dosis"],
+        families: ["Rubik", "Dosis","Teko"],
       },
     });
   }, [])
 
+  const containerStyle = {
+    backgroundImage:
+      `linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),url(${backGroundImagePath})`,
+      backgroundPosition: "center",
+      backgroundRepeat: "no-repeat",
+      backgroundSize: "cover"
+  };
+
   return (
     <BrowserRouter>
-      <NavigationHeader/>
+      <div style={containerStyle}>
+      
+        <NavigationHeader />
         <Routes>
-          <Route path='/' element={<Home></Home>}/>
-          <Route path='/classes' element={<Classes></Classes>}/>
+          <Route path='/' element={<Home changeBackground={changeBackground}></Home>} />
+          <Route path='/classes' element={<Classes changeBackground={changeBackground}></Classes>} />
         </Routes>
-      <NavigationFooter/>
+      </div>
+      <NavigationFooter />
+
     </BrowserRouter>
   );
 }
