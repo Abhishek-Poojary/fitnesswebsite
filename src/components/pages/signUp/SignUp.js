@@ -85,7 +85,7 @@ const SignUp = () => {
             }
         }
         else {
-            dispatch(userSignUpAction(email, password,name));
+            dispatch(userSignUpAction(email,name,password));
             navigate('/login')
         }
     }

@@ -4,7 +4,8 @@ import {
     REQUEST_FOR_USER_LOGIN_SUCCESS,
     REQUEST_TO_REGISTER_USER,
     REQUEST_TO_REGISTER_USER_FAIL,
-    REQUEST_TO_REGISTER_USER_SUCCESS
+    REQUEST_TO_REGISTER_USER_SUCCESS,
+    REQUEST_TO_LOGOUT_USER_SUCCESS
 } from '../constants/UserConstants'
 
 export const userLoginReducer=( state={},action)=>{
@@ -30,7 +31,12 @@ export const userLoginReducer=( state={},action)=>{
                 isAuthenticated:true,
                 user:action.payload
             }
-        
+        case REQUEST_TO_LOGOUT_USER_SUCCESS:
+            return{
+                loading:false,
+                isAuthenticated:false,
+                user:null
+            }
         default: return state;
     }
 

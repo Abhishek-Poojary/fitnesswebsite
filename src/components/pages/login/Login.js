@@ -85,13 +85,13 @@ const Login = () => {
                             <div className="card-text">
                                 <form onSubmit={(e)=>loginUser(e)}>
                                     <div className="form-group">
-                                        <label htmlFor="exampleInputEmail1">Email address </label>
-                                        <input type="email" className="form-control form-control-sm" id="exampleInputEmail1" onChange={(e)=>verifyEmail(e)}  placeholder="Enter Email"/>
+                                        <label htmlFor="exampleInputEmail1" className="form-label"> Email address </label>
+                                        <input type="email" className="form-control form-control-lg" id="exampleInputEmail1" onChange={(e)=>verifyEmail(e)}  placeholder="Enter Email"/>
                                         <span className="text-danger">{emailError}</span>
                                     </div>
                                     <div className="form-group">
-                                        <label htmlFor="exampleInputPassword1">Password </label>  
-                                        <input type="password" className="form-control form-control-sm" id="exampleInputPassword1" onChange={(e)=>verifyPassword(e)} placeholder="Enter Password"/>
+                                        <label htmlFor="exampleInputPassword1" className="form-label">Password </label>  
+                                        <input type="password" className="form-control form-control-lg" id="exampleInputPassword1" onChange={(e)=>verifyPassword(e)} placeholder="Enter Password"/>
                                         <span className="text-danger">{passwordError}</span>
                                     </div>
                                     <button type="submit" className="btn btn-primary btn-block"> Sign in </button>
