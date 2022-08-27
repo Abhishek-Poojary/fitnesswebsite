@@ -9,6 +9,8 @@ import NavigationHeader from './components/navigation/header/NavigationHeader';
 import NavigationFooter from './components/navigation/footer/NavigationFooter';
 import ClassInformation from './components/pages/classInformation/ClassInformation'
 import About from './components/pages/about/About';
+import Login from './components/pages/login/Login';
+import SignUp from './components/pages/signUp/SignUp';
 
 function App() {
   const [backGroundImagePath, setBackGroundImagePath] = useState("");
@@ -46,6 +48,8 @@ function App() {
           <Route exact path='/classes' element={<Classes changeBackground={changeBackground}></Classes>} />
           <Route path='/classes/:id' element={<ClassInformation ></ClassInformation>} />
           <Route path='/about' element={<About ></About>} />
+          <Route path='/login' element={<Login></Login>}/>
+          <Route path='/signUp' element={<SignUp></SignUp>} />
         </Routes>
       </div>
       <NavigationFooter />
