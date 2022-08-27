@@ -1,9 +1,17 @@
 import React, { Fragment, useEffect, useState } from "react";
 import './Classes.css';
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Classes = ({ changeBackground }) => {
   const [data, setData] = useState("");
+  const navigate=useNavigate();
+
+  const navigateUser=(id)=>{
+      navigate('/classes/'+id)
+      navigate(0);
+  }
+
 
   useEffect(() => {
     changeBackground("./images/classes_background.jpg");
@@ -26,12 +34,12 @@ const Classes = ({ changeBackground }) => {
         {data && data.map((item,index) => {
           return (
             <div className="custom-class-inner-container" key={index}>
-              <div>
-                  <span className="custom-class-header">{item.name}</span>
+              <div className="custom-class-title-name">
+                  <span >{item.name}</span>
               </div>
               <div>
-                <p>{item.description}</p>
-                <span>Read More</span>
+                <p className="class-description">{item.description}</p>
+                <span className="navigate-user" onClick={()=>navigateUser(item.id)}>Book</span>
               </div>
             </div>
           );

@@ -6,7 +6,7 @@ const NavigationHeader = (props) => {
     const location=useLocation();
     console.log(props)
     return (
-        <Navbar expand="sm" variant='dark'  collapseOnSelect className='pt-5' id="page-content">
+        <Navbar expand="sm" variant={props.textStyle}  collapseOnSelect className='pt-5' id="page-content">
             <Container>
                 <Navbar.Brand className='custom-brand-style' >PlayFit</Navbar.Brand>
                 <Navbar.Toggle aria-controls='collpase-nav-id' />
@@ -14,7 +14,8 @@ const NavigationHeader = (props) => {
                     <Nav activeKey={location.pathname} >
                         <Nav.Link className="custom-nav-link-styles" href='/'>Home</Nav.Link>
                         <Nav.Link className="custom-nav-link-styles" href='/classes'>Classes</Nav.Link>
-                        <Nav.Link className="custom-nav-link-styles" href='/d'>About and Gallery</Nav.Link>
+                        <Nav.Link className="custom-nav-link-styles" href='/about'>About and Gallery</Nav.Link>
+                        <Nav.Link href="/login">Login</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </Container>

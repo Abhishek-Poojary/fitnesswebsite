@@ -7,7 +7,8 @@ import WebFont from "webfontloader";
 import Classes from './components/pages/classes/Classes';
 import NavigationHeader from './components/navigation/header/NavigationHeader';
 import NavigationFooter from './components/navigation/footer/NavigationFooter';
-
+import ClassInformation from './components/pages/classInformation/ClassInformation'
+import About from './components/pages/about/About';
 
 function App() {
   const [backGroundImagePath, setBackGroundImagePath] = useState("");
@@ -18,7 +19,7 @@ function App() {
   useEffect(() => {
     WebFont.load({
       google: {
-        families: ["Rubik", "Dosis","Teko"],
+        families: ["Rubik", "Dosis","Teko","Mukta"],
       },
     });
   }, [])
@@ -31,14 +32,20 @@ function App() {
       backgroundSize: "cover"
   };
 
+  const containerDefaultStyle={
+     backgroudColor:'#fff',
+  }
+
   return (
     <BrowserRouter>
-      <div style={containerStyle}>
+      <div style={backGroundImagePath!=="" ?containerStyle:containerDefaultStyle}>
       
-        <NavigationHeader />
+        <NavigationHeader  textStyle={backGroundImagePath!=="" ? 'dark':'light'} />
         <Routes>
           <Route path='/' element={<Home changeBackground={changeBackground}></Home>} />
-          <Route path='/classes' element={<Classes changeBackground={changeBackground}></Classes>} />
+          <Route exact path='/classes' element={<Classes changeBackground={changeBackground}></Classes>} />
+          <Route path='/classes/:id' element={<ClassInformation ></ClassInformation>} />
+          <Route path='/about' element={<About ></About>} />
         </Routes>
       </div>
       <NavigationFooter />
