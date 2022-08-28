@@ -11,6 +11,8 @@ import ClassInformation from './components/pages/classInformation/ClassInformati
 import About from './components/pages/about/About';
 import Login from './components/pages/login/Login';
 import SignUp from './components/pages/signUp/SignUp';
+import DashBoard from './components/pages/dashboard/DashBoard';
+import ProtectedRoute from './components/protectedRoute/ProtectedRoute';
 
 function App() {
   const [backGroundImagePath, setBackGroundImagePath] = useState("");
@@ -50,6 +52,7 @@ function App() {
           <Route path='/about' element={<About ></About>} />
           <Route path='/login' element={<Login></Login>}/>
           <Route path='/signUp' element={<SignUp></SignUp>} />
+          <Route path='/dashboard' element={<ProtectedRoute adminRoute={true} > <DashBoard></DashBoard></ProtectedRoute >}/>
         </Routes>
       </div>
       <NavigationFooter />
