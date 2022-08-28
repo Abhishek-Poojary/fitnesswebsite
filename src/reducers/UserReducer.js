@@ -8,7 +8,12 @@ import {
     REQUEST_TO_LOGOUT_USER_SUCCESS,
     REQUEST_TO_LOAD_USER_DETAILS,
     REQUEST_TO_LOAD_USER_DETAILS_FAIL,
-    REQUEST_TO_LOAD_USER_DETAILS_SUCCESS
+    REQUEST_TO_LOAD_USER_DETAILS_SUCCESS,
+    REQUEST_TO_UPDATE_EVENT_DATE,
+    REQUEST_TO_UPDATE_EVENT_DATE_FAIL, REQUEST_TO_UPDATE_EVENT_DATE_SUCCESS,
+    REQUEST_TO_GET_EVENT_DATE,
+    REQUEST_TO_GET_EVENT_DATE_FAIL, REQUEST_TO_GET_EVENT_DATE_SUCCESS,
+    REQUEST_TO_GET_ALL_CLASS, REQUEST_TO_GET_ALL_CLASS_FAIL, REQUEST_TO_GET_ALL_CLASS_SUCCESS
 } from '../constants/UserConstants'
 
 export const userLoginReducer = (state = {}, action) => {
@@ -61,6 +66,70 @@ export const loadUserReducer = (state = {}, action) => {
                 loading: false,
                 userRole: action.payload.role
             }
-        default : return state
+        default: return state
+    }
+}
+
+
+export const adminUpdateReducer = (state = {}, action) => {
+    switch (action.type) {
+        case REQUEST_TO_UPDATE_EVENT_DATE:
+            return {
+                loading: true
+            }
+        case REQUEST_TO_UPDATE_EVENT_DATE_FAIL:
+            return {
+                loading: false,
+                error: action.error
+            }
+        case REQUEST_TO_UPDATE_EVENT_DATE_SUCCESS:
+            return {
+                loading: false,
+                userRole: action.payload
+            }
+        default: return state
+    }
+}
+
+
+export const eventDateReducer = (state = {}, action) => {
+    switch (action.type) {
+        case REQUEST_TO_GET_EVENT_DATE:
+            return {
+                loading: true
+            }
+        case REQUEST_TO_GET_EVENT_DATE_FAIL:
+            return {
+                loading: false,
+                error: action.error
+            }
+        case REQUEST_TO_GET_EVENT_DATE_SUCCESS:
+            return {
+                loading: false,
+                date: action.payload
+            }
+        default: return state
+    }
+}
+
+
+export const classDetailReducer = (state = {}, action) => {
+
+    switch (action.type) {
+        case REQUEST_TO_GET_ALL_CLASS:
+            return {
+                loading: true,
+            }
+        case REQUEST_TO_GET_ALL_CLASS_FAIL:
+            return {
+                loading: false,
+                error: action.error
+            }
+        case REQUEST_TO_GET_ALL_CLASS_SUCCESS:
+            return {
+                loading: false,
+                classes: action.payload
+            }
+            default: return state
     }
 }

@@ -1,19 +1,25 @@
-import React from 'react';
-import { Navbar, Nav, Container,NavDropdown } from 'react-bootstrap';
-import { useLocation,useNavigate } from 'react-router-dom';
-import { useDispatch,useSelector } from 'react-redux'
+import React, { useEffect } from 'react';
+import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux'
 import { logoutUser } from '../../../actions/UserAction.js';
-
+import { getUserDetails } from '../../../actions/UserAction.js';
 const NavigationHeader = (props) => {
     const location = useLocation();
     const navigate = useNavigate();
-    const dispatch=useDispatch();
-    const { error, loading, isAuthenticated,user } = useSelector(state => state.login);
+    const dispatch = useDispatch();
+    const { error, loading, isAuthenticated, user } = useSelector(state => state.login);
+    const { loading: loadingRoleDetails, userRole } = useSelector((state) => state.user);
 
     const logout = () => {
         dispatch(logoutUser());
         navigate('/');
     }
+
+    useEffect(() => {
+        dispatch(getUserDetails(user))
+    }, [])
+
 
     return (
         <Navbar expand="sm" variant={props.textStyle} collapseOnSelect className='pt-5' id="page-content">
@@ -28,8 +34,11 @@ const NavigationHeader = (props) => {
                         {isAuthenticated ? (<Nav >
 
                             <NavDropdown title={user} >
-                                <NavDropdown.Item   onClick={logout}>Logout</NavDropdown.Item>
 
+                                {(!loadingRoleDetails && userRole === "admin") && (
+                                    <NavDropdown.Item href='/dashboard'>Admin DashBoard</NavDropdown.Item>
+                                )}
+                                <NavDropdown.Item onClick={logout}>Logout</NavDropdown.Item>
                             </NavDropdown>
 
                         </Nav>
