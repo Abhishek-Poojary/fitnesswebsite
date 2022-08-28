@@ -1,3 +1,4 @@
+Currently working on this project(its consist of redux for state management) will update more once its complete.
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
