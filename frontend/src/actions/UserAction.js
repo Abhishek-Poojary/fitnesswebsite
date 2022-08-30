@@ -22,24 +22,15 @@ export const userLoginAction = (email, password) => (dispatch, getState) => {
 
     dispatch({ type: REQUEST_FOR_USER_LOGIN });
 
-    var userData
+    var userData = {
+        email, password
+    }
 
-    axios.get("http://localhost:4000/users").then((result) => {
-
-
-        console.log(result)
-        let res = result.data.find((data) => data.email === email && data.password === password)
-        console.log(res)
-
-        if (res.length == 0)
-            dispatch({ type: REQUEST_FOR_USER_LOGIN_FAIL, error: "Please confirm your emailId and Password" });
-        else {
-            dispatch({ type: REQUEST_FOR_USER_LOGIN_SUCCESS, payload: res.name });
-            localStorage.setItem("loginState", JSON.stringify(getState().login))
-        }
-
-    }).catch((err) => {
-        dispatch({ type: REQUEST_FOR_USER_LOGIN_FAIL, error: "no Users present" });
+    axios.post("http://localhost:4000/api/v1/login", userData).then((result) => {
+        dispatch({ type: REQUEST_FOR_USER_LOGIN_SUCCESS, payload: result.data.name });
+        localStorage.setItem("loginState", JSON.stringify(getState().login))
+    }).catch((error) => {
+        dispatch({ type: REQUEST_FOR_USER_LOGIN_FAIL, error: error.response.data.error });
     })
 
 
@@ -52,17 +43,16 @@ export const userSignUpAction = (email, name, password) => (dispatch, getState) 
     let data = {
         email,
         name,
-        password,
-        role: "user"
+        password
     }
 
-    axios.post('http://localhost:4000/users', data)
-        .then(() => {
-            dispatch({ type: REQUEST_TO_REGISTER_USER_SUCCESS, payload: name })
+    axios.post('http://localhost:4000/api/v1/register', data)
+        .then((res) => {
+            dispatch({ type: REQUEST_TO_REGISTER_USER_SUCCESS, payload: res.data.name })
             localStorage.setItem("loginState", JSON.stringify(getState().login))
         })
         .catch((err) => {
-            dispatch({ type: REQUEST_TO_REGISTER_USER_FAIL, error: err })
+            dispatch({ type: REQUEST_FOR_USER_LOGIN_FAIL, error: err.response.data.error });
         })
 }
 
@@ -76,12 +66,11 @@ export const logoutUser = () => (dispatch) => {
 
 export const getUserDetails = (user) => (dispatch, getState) => {
     dispatch({ type: REQUEST_TO_LOAD_USER_DETAILS })
-    axios.get("http://localhost:4000/users?name=" + user).then((result) => {
+    axios.get("http://localhost:4000/api/v1/user/" + user).then((result) => {
+        dispatch({ type: REQUEST_TO_LOAD_USER_DETAILS_SUCCESS, payload: result.data.user[0] });
 
-        dispatch({ type: REQUEST_TO_LOAD_USER_DETAILS_SUCCESS, payload: result.data[0] });
-
-    }).catch((err) => {
-        dispatch({ type: REQUEST_TO_LOAD_USER_DETAILS_FAIL, error: "User not present" });
+    }).catch((error) => {
+        dispatch({ type: REQUEST_FOR_USER_LOGIN_FAIL, error: error.response.data.error });
     })
 }
 
@@ -124,13 +113,13 @@ export const getUserDetails = (user) => (dispatch, getState) => {
 //     })
 // }
 
-export const updateEventDate = (date) => (dispatch) => {
+export const updateEventDate = (name,date) => (dispatch) => {
     let obj = {
-        date
+        name,date
     }
     dispatch({ type: REQUEST_TO_UPDATE_EVENT_DATE })
 
-    axios.put("http://localhost:4000/event", obj).then((result) => {
+    axios.put("http://localhost:4000/api/v1/event/update", obj).then((result) => {
 
 
         dispatch({ type: REQUEST_TO_UPDATE_EVENT_DATE_SUCCESS, payload: "updated" });
@@ -140,11 +129,11 @@ export const updateEventDate = (date) => (dispatch) => {
     })
 }
 
-export const getEventDate = () => (dispatch) => {
+export const getEventDate = (name) => (dispatch) => {
 
     dispatch({ type: REQUEST_TO_GET_EVENT_DATE })
 
-    axios.get("http://localhost:4000/event").then((result) => {
+    axios.get("http://localhost:4000/api/v1/event/date?name="+name).then((result) => {
         dispatch({ type: REQUEST_TO_GET_EVENT_DATE_SUCCESS, payload: result.data.date });
     }).catch((err) => {
         dispatch({ type: REQUEST_TO_GET_EVENT_DATE_FAIL, error: err });
@@ -155,7 +144,7 @@ export const getEventDate = () => (dispatch) => {
 export const getAllClasses = () => (dispatch) => {
     dispatch({ type: REQUEST_TO_GET_ALL_CLASS })
 
-    axios.get("http://localhost:4000/classes").then((result) => {
+    axios.get("http://localhost:4000/api/v1/event/all").then((result) => {
         dispatch({ type: REQUEST_TO_GET_ALL_CLASS_SUCCESS, payload: result.data });
 
     }).catch((error) => {
