@@ -57,6 +57,36 @@ exports.getUserDetails=async(req,res,next)=>{
 }
 
 
-exports.registerUser=async(req,res,next)=>{
-    
+exports.registerUserForEvent=async(req,res,next)=>{
+    const classes=await Class.findOne({name:req.body.name})
+
+    if(classes.taken===classes.intake){
+        return next(ErrorHandler("Intake is Full",400));
+    }
+
+    classes.taken+=1;
+    await classes.save();
+
+    const user=await User.findOne({name:req.body.user})
+
+    user.history.push({name:req.body.name,date:classes.date});
+
+    await user.save();
+
+    res.status(200).json({
+        message:"user Registered for the class"
+    })
 }
+
+// exports.getAllUserRegistered=async(req,res,next)=>{
+//     const user=await User.findOne({name:req.params.name})
+
+
+//     if(!user){
+//         return next(new ErrorHandler("Invalid User Id Entered",400))
+//     }
+
+//     res.status(200).json({
+//         user:user
+//     })
+// }
