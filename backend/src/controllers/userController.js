@@ -60,15 +60,25 @@ exports.getUserDetails=async(req,res,next)=>{
 exports.registerUserForEvent=async(req,res,next)=>{
     const classes=await Class.findOne({name:req.body.name})
 
+
+    if(!classes){
+        return next(new ErrorHandler("Invalid Class Name Entered",400))
+    }
+
     if(classes.taken===classes.intake){
         return next(ErrorHandler("Intake is Full",400));
     }
 
     classes.taken+=1;
     await classes.save();
-
+  
     const user=await User.findOne({name:req.body.user})
-
+  
+    
+    if(!user){
+        return next(new ErrorHandler("Invalid User name Entered",400))
+    }
+   
     user.history.push({name:req.body.name,date:classes.date});
 
     await user.save();

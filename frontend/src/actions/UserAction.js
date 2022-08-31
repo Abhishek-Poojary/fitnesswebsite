@@ -14,7 +14,9 @@ import {
     REQUEST_TO_UPDATE_EVENT_DATE_FAIL, REQUEST_TO_UPDATE_EVENT_DATE_SUCCESS,
     REQUEST_TO_GET_EVENT_DATE,
     REQUEST_TO_GET_EVENT_DATE_FAIL, REQUEST_TO_GET_EVENT_DATE_SUCCESS,
-    REQUEST_TO_GET_ALL_CLASS, REQUEST_TO_GET_ALL_CLASS_FAIL, REQUEST_TO_GET_ALL_CLASS_SUCCESS
+    REQUEST_TO_GET_ALL_CLASS, REQUEST_TO_GET_ALL_CLASS_FAIL, REQUEST_TO_GET_ALL_CLASS_SUCCESS,
+    REQUEST_TO_GET_EVENT_DETAIl,REQUEST_TO_GET_EVENT_DETAIl_FAIL,REQUEST_TO_GET_EVENT_DETAIl_SUCCESS,
+    REQUEST_TO_REGISTER_USER_FOR_EVENT,REQUEST_TO_REGISTER_USER_FOR_EVENT_FAIL,REQUEST_TO_REGISTER_USER_FOR_EVENT_SUCCESS
 } from '../constants/UserConstants'
 
 
@@ -75,43 +77,6 @@ export const getUserDetails = (user) => (dispatch, getState) => {
 }
 
 
-// export const updateEventDate = (date) => (dispatch) => {
-//     let obj = {
-//         date
-//     }
-//     dispatch({ type: REQUEST_TO_UPDATE_EVENT_DATE })
-
-//     axios.put("http://localhost:4000/event", obj).then((result) => {
-
-//         axios.get("http://localhost:4000/classes").then((result) => {
-
-//             let res = result.data.map((item) => {
-//                 return { ...item, taken: 0 };
-//             })
-
-//             axios.delete("http://localhost:4000/classes", res).then(() => {
-//                 axios.post("http://localhost:4000/classes", res).then((result) => {
-
-//                     dispatch({ type: REQUEST_TO_UPDATE_EVENT_DATE_SUCCESS, payload: "updated" });
-
-//                 }).catch((err) => {
-//                     dispatch({ type: REQUEST_TO_UPDATE_EVENT_DATE_FAIL, error: err });
-//                 })
-
-
-//             }).catch((err) => {
-//                 dispatch({ type: REQUEST_TO_UPDATE_EVENT_DATE_FAIL, error: err });
-//             })
-
-
-
-//         }).catch((err) => {
-//             dispatch({ type: REQUEST_TO_UPDATE_EVENT_DATE_FAIL, error: err });
-//         })
-//     }).catch((err) => {
-//         dispatch({ type: REQUEST_TO_UPDATE_EVENT_DATE_FAIL, error: err });
-//     })
-// }
 
 export const updateEventDate = (name,date) => (dispatch) => {
     let obj = {
@@ -121,8 +86,8 @@ export const updateEventDate = (name,date) => (dispatch) => {
 
     axios.put("http://localhost:4000/api/v1/event/update", obj).then((result) => {
 
-
-        dispatch({ type: REQUEST_TO_UPDATE_EVENT_DATE_SUCCESS, payload: "updated" });
+        console.log(result)
+        dispatch({ type: REQUEST_TO_UPDATE_EVENT_DATE_SUCCESS, payload: result.data.message });
 
     }).catch((err) => {
         dispatch({ type: REQUEST_TO_UPDATE_EVENT_DATE_FAIL, error: err });
@@ -149,5 +114,31 @@ export const getAllClasses = () => (dispatch) => {
 
     }).catch((error) => {
         dispatch({ type: REQUEST_TO_GET_ALL_CLASS_FAIL, payload: error });
+    })
+}
+
+export const getClassDetails = (name) => (dispatch) => {
+    dispatch({ type: REQUEST_TO_GET_EVENT_DETAIl })
+
+    axios.get("http://localhost:4000/api/v1/event/"+name).then((result) => {
+        dispatch({ type: REQUEST_TO_GET_EVENT_DETAIl_SUCCESS, payload: result.data });
+
+    }).catch((error) => {
+        dispatch({ type: REQUEST_TO_GET_EVENT_DETAIl_FAIL, payload: error });
+    })
+}
+
+
+export const registerUserForEvent = (name,username) => (dispatch) => {
+    let data={
+        user:username,name
+    }
+    dispatch({ type: REQUEST_TO_REGISTER_USER_FOR_EVENT })
+    console.group(username)
+    axios.put("http://localhost:4000/api/v1/user/event/register",data).then((result) => {
+        dispatch({ type: REQUEST_TO_REGISTER_USER_FOR_EVENT_SUCCESS, payload: result.data });
+
+    }).catch((error) => {
+        dispatch({ type: REQUEST_TO_REGISTER_USER_FOR_EVENT_FAIL, payload: error });
     })
 }

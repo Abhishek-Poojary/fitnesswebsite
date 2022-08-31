@@ -48,7 +48,7 @@ function App() {
         <Routes>
           <Route path='/' element={<Home changeBackground={changeBackground}></Home>} />
           <Route exact path='/classes' element={<Classes changeBackground={changeBackground}></Classes>} />
-          <Route path='/classes/:id' element={<ClassInformation ></ClassInformation>} />
+          <Route path='/class' element={<ClassInformation ></ClassInformation>} />
           <Route path='/about' element={<About ></About>} />
           <Route path='/login' element={<Login></Login>}/>
           <Route path='/signUp' element={<SignUp></SignUp>} />

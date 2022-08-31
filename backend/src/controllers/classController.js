@@ -60,3 +60,16 @@ exports.getAllClasses=async(req,res,next)=>{
         data:classes
     })
 }
+
+exports.getClassDetails=async(req,res,next)=>{
+
+    const classes=await Class.findOne({name:req.params.name});
+
+    if(!classes){
+        return next(new ErrorHandler("No Class Found"));
+    }
+
+    res.status(200).json({
+        data:classes
+    })
+}
