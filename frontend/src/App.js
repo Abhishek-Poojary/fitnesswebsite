@@ -16,14 +16,20 @@ import ProtectedRoute from './components/protectedRoute/ProtectedRoute';
 
 function App() {
   const [backGroundImagePath, setBackGroundImagePath] = useState("");
-  const changeBackground = (value) => {
+  const [position, setPosition] = useState("");
+
+  const [sizeImage, setImageSize] = useState("");
+
+  const changeBackground = (value, position, size) => {
     setBackGroundImagePath(value);
+    setPosition(position);
+    setImageSize(size);
   }
 
   useEffect(() => {
     WebFont.load({
       google: {
-        families: ["Rubik", "Dosis","Teko","Mukta"],
+        families: ["Rubik", "Dosis", "Teko", "Mukta"],
       },
     });
   }, [])
@@ -31,28 +37,28 @@ function App() {
   const containerStyle = {
     backgroundImage:
       `linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),url(${backGroundImagePath})`,
-      backgroundPosition: "center",
-      backgroundRepeat: "no-repeat",
-      backgroundSize: "cover"
+    backgroundPosition: position,
+    backgroundRepeat: "no-repeat",
+    backgroundSize: sizeImage
   };
 
-  const containerDefaultStyle={
-     backgroudColor:'#fff',
+  const containerDefaultStyle = {
+    backgroudColor: '#fff',
   }
 
   return (
     <BrowserRouter>
-      <div style={backGroundImagePath!=="" ?containerStyle:containerDefaultStyle}>
-      
-        <NavigationHeader  textStyle={backGroundImagePath!=="" ? 'dark':'light'} />
+      <div style={backGroundImagePath !== "" ? containerStyle : containerDefaultStyle}>
+
+        <NavigationHeader textStyle={backGroundImagePath !== "" ? 'dark' : 'light'} />
         <Routes>
           <Route path='/' element={<Home changeBackground={changeBackground}></Home>} />
           <Route exact path='/classes' element={<Classes changeBackground={changeBackground}></Classes>} />
           <Route path='/class' element={<ClassInformation ></ClassInformation>} />
           <Route path='/about' element={<About ></About>} />
-          <Route path='/login' element={<Login></Login>}/>
+          <Route path='/login' element={<Login></Login>} />
           <Route path='/signUp' element={<SignUp></SignUp>} />
-          <Route path='/dashboard' element={<ProtectedRoute adminRoute={true} > <DashBoard></DashBoard></ProtectedRoute >}/>
+          <Route path='/dashboard' element={<ProtectedRoute adminRoute={true} > <DashBoard></DashBoard></ProtectedRoute >} />
         </Routes>
       </div>
       <NavigationFooter />

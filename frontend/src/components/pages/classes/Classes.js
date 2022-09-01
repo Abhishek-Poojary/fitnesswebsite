@@ -7,17 +7,17 @@ import { getAllClasses } from "../../../actions/UserAction";
 
 const Classes = ({ changeBackground }) => {
   const [data, setData] = useState("");
-  const navigate=useNavigate();
-  const dispatch=useDispatch();
-  const {loading,classes}=useSelector(state=>state.classes);
-  const navigateUser=(name)=>{
-      navigate('/class?name='+name)
-      navigate(0);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { loading, classes } = useSelector(state => state.classes);
+  const navigateUser = (name) => {
+    navigate('/class?name=' + name)
+    navigate(0);
   }
 
 
   useEffect(() => {
-    changeBackground("./images/classes_background.jpg");
+    changeBackground("./images/classes_background.jpg", "top", "contain");
 
   })
   useEffect(() => {
@@ -30,15 +30,15 @@ const Classes = ({ changeBackground }) => {
         <span>Group Fitness Classes</span>
       </div>
       <div className="custom-class-container">
-        {loading===false && classes.map((item,index) => {
+        {loading === false && classes.map((item, index) => {
           return (
             <div className="custom-class-inner-container" key={index}>
               <div className="custom-class-title-name">
-                  <span >{item.name}</span>
+                <span >{item.name}</span>
               </div>
               <div>
                 <p className="class-description">{item.description}</p>
-                <span className="navigate-user" onClick={()=>navigateUser(item.name)}>Book</span>
+                <span className="navigate-user" onClick={() => navigateUser(item.name)}>Book</span>
               </div>
             </div>
           );

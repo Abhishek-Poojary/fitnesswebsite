@@ -15,8 +15,8 @@ import {
     REQUEST_TO_GET_EVENT_DATE,
     REQUEST_TO_GET_EVENT_DATE_FAIL, REQUEST_TO_GET_EVENT_DATE_SUCCESS,
     REQUEST_TO_GET_ALL_CLASS, REQUEST_TO_GET_ALL_CLASS_FAIL, REQUEST_TO_GET_ALL_CLASS_SUCCESS,
-    REQUEST_TO_GET_EVENT_DETAIl,REQUEST_TO_GET_EVENT_DETAIl_FAIL,REQUEST_TO_GET_EVENT_DETAIl_SUCCESS,
-    REQUEST_TO_REGISTER_USER_FOR_EVENT,REQUEST_TO_REGISTER_USER_FOR_EVENT_FAIL,REQUEST_TO_REGISTER_USER_FOR_EVENT_SUCCESS
+    REQUEST_TO_GET_EVENT_DETAIl, REQUEST_TO_GET_EVENT_DETAIl_FAIL, REQUEST_TO_GET_EVENT_DETAIl_SUCCESS,
+    REQUEST_TO_REGISTER_USER_FOR_EVENT, REQUEST_TO_REGISTER_USER_FOR_EVENT_FAIL, REQUEST_TO_REGISTER_USER_FOR_EVENT_SUCCESS
 } from '../constants/UserConstants'
 
 
@@ -78,9 +78,9 @@ export const getUserDetails = (user) => (dispatch, getState) => {
 
 
 
-export const updateEventDate = (name,date) => (dispatch) => {
+export const updateEventDate = (name, date) => (dispatch) => {
     let obj = {
-        name,date
+        name, date
     }
     dispatch({ type: REQUEST_TO_UPDATE_EVENT_DATE })
 
@@ -98,7 +98,7 @@ export const getEventDate = (name) => (dispatch) => {
 
     dispatch({ type: REQUEST_TO_GET_EVENT_DATE })
 
-    axios.get("http://localhost:4000/api/v1/event/date?name="+name).then((result) => {
+    axios.get("http://localhost:4000/api/v1/event/date?name=" + name).then((result) => {
         dispatch({ type: REQUEST_TO_GET_EVENT_DATE_SUCCESS, payload: result.data.date });
     }).catch((err) => {
         dispatch({ type: REQUEST_TO_GET_EVENT_DATE_FAIL, error: err });
@@ -120,7 +120,7 @@ export const getAllClasses = () => (dispatch) => {
 export const getClassDetails = (name) => (dispatch) => {
     dispatch({ type: REQUEST_TO_GET_EVENT_DETAIl })
 
-    axios.get("http://localhost:4000/api/v1/event/"+name).then((result) => {
+    axios.get("http://localhost:4000/api/v1/event/" + name).then((result) => {
         dispatch({ type: REQUEST_TO_GET_EVENT_DETAIl_SUCCESS, payload: result.data });
 
     }).catch((error) => {
@@ -129,13 +129,13 @@ export const getClassDetails = (name) => (dispatch) => {
 }
 
 
-export const registerUserForEvent = (name,username) => (dispatch) => {
-    let data={
-        user:username,name
+export const registerUserForEvent = (name, username) => (dispatch) => {
+    let data = {
+        user: username, name
     }
     dispatch({ type: REQUEST_TO_REGISTER_USER_FOR_EVENT })
     console.group(username)
-    axios.put("http://localhost:4000/api/v1/user/event/register",data).then((result) => {
+    axios.put("http://localhost:4000/api/v1/user/event/register", data).then((result) => {
         dispatch({ type: REQUEST_TO_REGISTER_USER_FOR_EVENT_SUCCESS, payload: result.data });
 
     }).catch((error) => {

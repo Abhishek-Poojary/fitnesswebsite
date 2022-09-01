@@ -1,8 +1,8 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux'
 import './Login.css'
-import {useNavigate,Link}  from 'react-router-dom'
-import {  userLoginAction } from "../../../actions/UserAction.js";
+import { useNavigate, Link } from 'react-router-dom'
+import { userLoginAction } from "../../../actions/UserAction.js";
 
 
 const Login = () => {
@@ -30,7 +30,7 @@ const Login = () => {
         }
 
     }
-   
+
     const verifyPassword = (event) => {
         setLoginError("")
         let value = event.target.value;
@@ -67,13 +67,13 @@ const Login = () => {
 
     useEffect(() => {
         if (isAuthenticated) {
-                navigate("/");
+            navigate("/");
         }
         if (email && email !== "" && error) {
             setLoginError("Wrong Email or Password")
         }
 
-    }, [dispatch, error, isAuthenticated,loading]);
+    }, [dispatch, error, isAuthenticated, loading]);
 
 
     return (
@@ -83,21 +83,21 @@ const Login = () => {
                     <div className="card login-form">
                         <div className="card-body">
                             <div className="card-text">
-                                <form onSubmit={(e)=>loginUser(e)}>
+                                <form onSubmit={(e) => loginUser(e)}>
                                     <div className="form-group">
                                         <label htmlFor="exampleInputEmail1" className="form-label"> Email address </label>
-                                        <input type="email" className="form-control form-control-lg" id="exampleInputEmail1" onChange={(e)=>verifyEmail(e)}  placeholder="Enter Email"/>
+                                        <input type="email" className="form-control form-control-lg" id="exampleInputEmail1" onChange={(e) => verifyEmail(e)} placeholder="Enter Email" />
                                         <span className="text-danger">{emailError}</span>
                                     </div>
                                     <div className="form-group">
-                                        <label htmlFor="exampleInputPassword1" className="form-label">Password </label>  
-                                        <input type="password" className="form-control form-control-lg" id="exampleInputPassword1" onChange={(e)=>verifyPassword(e)} placeholder="Enter Password"/>
+                                        <label htmlFor="exampleInputPassword1" className="form-label">Password </label>
+                                        <input type="password" className="form-control form-control-lg" id="exampleInputPassword1" onChange={(e) => verifyPassword(e)} placeholder="Enter Password" />
                                         <span className="text-danger">{passwordError}</span>
                                     </div>
                                     <button type="submit" className="btn btn-primary btn-block"> Sign in </button>
                                     <span className="text-danger">{loginError}</span>
                                     <div className="sign-up">
-                                        Don't have an account?<Link to="/signUp">Sign Up</Link>
+                                        Don't have an account?<Link to="/signUp"> Sign Up</Link>
                                     </div>
                                 </form>
                             </div>

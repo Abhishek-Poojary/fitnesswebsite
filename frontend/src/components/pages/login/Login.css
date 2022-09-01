@@ -24,6 +24,9 @@ font-weight: 300;
 .sign-up {  
     padding: 20px 0 0;  
 }  
+.sign-up a{
+    text-decoration: none;
+}
 .alert {  
     margin-bottom: -30px;  
     font-size: 13px;  
